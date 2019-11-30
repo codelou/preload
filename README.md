@@ -22,4 +22,6 @@ npm run build  (输出压缩打包后的preload代码)
 
 
 # 部分截图
-<img src="https://cdn.firstlinkapp.com/upload/2019_11/1575108205811_67053.gif"/>
+
+
+<img src= "./imgs/preload.gif"  />
