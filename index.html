@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>preload页面</title>
+    <style>
+            html,body{
+                width: 100%;
+                background-color: #fff!important;
+            }
+            a{
+             text-decoration: none;
+            }
+            .box{
+                text-align: center;
+            }
+            .show-pic{
+                width: 300px;
+                height: 300px;
+
+            }
+            .btn{
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+                border: 1px solid #ccc;
+                background-color: #fff;
+                padding: 0 10px;
+                margin-right: 50px;
+                color: #333;
+            }
+            .btn:hover{
+                background-color: #eee;
+            }
+            .progress-outer{
+               width: 80%;
+               display: inline-block;
+               margin: 0 10px;
+            }
+            .progress-inner{
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                overflow: hidden;
+                vertical-align: middle;
+                background-color: #f5f5f5;
+                border-radius: 100px;
+                height: 20px;
+            }
+            .progress-bg{
+                position: relative;
+                width: 1px;
+                background-color: #1890ff;
+                border-radius: 100px;
+                height: 100%;
+                -webkit-transition: all .4s cubic-bezier(.08, .82, .17, 1) 0s;
+                transition: all .4s cubic-bezier(.08, .82, .17, 1) 0s;
+            }
+
+            
+    </style>
+</head>
+<body>
+<div class="box">
+     <img class="show-pic" src="https://cdn.firstlinkapp.com/upload/2019_9/1568704881859_90213.jpg " alt="pic" id="img" />
+     <p>
+        <a href="javascript:;" class="btn" data-control="prev">上一页</a>
+        <a href="javascript:;" class="btn" data-control="next">下一页</a>
+     </p>
+     <div class="progress-outer">
+        <div class="progress-inner">
+            <div class="progress-bg"></div>
+            </div>
+     </div>
+     <span class="progress">1</span>
+
+     
+
+</div>
+
+<script  src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>  
+<!-- <script  src="./js/preload.js"></script> -->
+<script src="./dist/js/preload.min.js"></script>
+<script src="https://static.fine3q.com/res/viewport/viewport.min.js"></script>
+<script>
+
+var imgs=[
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568702962377_25908.jpg',
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568704729171_8143.jpg',
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568704377071_77123.jpg',
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568703988449_2617.jpg',
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568703507970_22182.jpg',
+           'https://cdn.firstlinkapp.com/upload/2019_9/1568702081848_25235.jpg'
+       ];
+       var index = 0,
+           len = imgs.length,
+           $progress = $('.progress');
+       $.preload(imgs,{
+           each:function (count) {
+               $progress.html(Math.round((count+1)/len*100)+'%');
+               $('.progress-bg').width(Math.round((count+1)/len*100)+'%');
+           },
+           all:function () {
+               document.title = '1/'+len;
+           }
+       });
+       $('.btn').on('click',function () {
+           $('.progress-bg').width(0);
+           $progress.html('0%');
+           if('prev' === $(this).data('control')){
+               index = Math.max(0,--index);
+           }
+           else {
+               index = Math.min(len-1,++index);
+           }
+           document.title = (index+1) + '/' + len;
+           $.preload(imgs[index],{
+               all:function(){
+                $('.progress-bg').width('100%');
+                $progress.html('100%');
+               }
+           })
+           $('#img').attr('src',imgs[index]);
+       })
+</script>
+
+
+
+
+
+</body>
+</html>
