@@ -26,6 +26,10 @@ npm run build  (输出压缩打包后的preload代码)
 
 <img src= "./imgs/preload.gif"  />
 
+# demo
+
+<a href="https://codelou.github.io/preload/index.html">demo</a>
+
 
 
 # 多说一句
